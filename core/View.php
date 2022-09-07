@@ -4,23 +4,37 @@ namespace Core;
 
 class View{
 
-    public $path;
-    public $title;
-    public $layout = 'default';
+    public function render(Page $page){
+        return $this->renderLayout($page, $this->renderView($page));
+    }
 
-    public function render($path, $title, $layout,){
-        $path = 'app/views/' . $path . '.php';
-        if(file_exists($path)){
+    public function renderLayout(Page $page){
+        $layoutPath = $_SERVER['DOCUMENT_ROOT'] . "/app/views/layouts/{$page->layout}.php";
+
+        if(file_exists($layoutPath)){
             ob_start();
-            require $path;
-            $content = ob_get_clean();
-            if(!empty($layout)){
-                $this->layout = $layout;
-            }
-            require 'app/views/layouts/' . $this->layout . '.php';
+            $title = $page->title;
+            include $layoutPath;
         }
         else{
-            echo 'Представление ' . $path . ' не найдено';
+            echo "Не найден файл с лейаутом по пути $layoutPath"; die();
+        }
+    }
+
+    public function renderView(Page $page){
+        if($page->view){
+            $viewPath = $_SERVER['DOCUMENT_ROOT'] . "/app/views/{$page->view}.php";
+            
+            if(file_exists($viewPath)){
+                ob_clean();
+                $data = $page->data;
+                extract($data);
+                include $viewPath;
+                return ob_get_clean();
+            }
+            else{
+                echo "Не найден файл с представлением по пути $viewPath"; die();
+            }
         }
     }
 }

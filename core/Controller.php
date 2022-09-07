@@ -12,4 +12,8 @@ class Controller {
         $this->view = new View;
     }
 
+    protected function render($title, $layout, $view, $data = []){
+        return new Page($title, $layout, $view, $data);
+    }
+
 }

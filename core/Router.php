@@ -6,7 +6,7 @@ class Router{
 
     public function __construct($routes){
         foreach ($routes as $route){
-            // echo $route->url;
+
             $uri = $_SERVER['REQUEST_URI'];
             $pattern = $this->createPattern($route->url);
 
@@ -17,7 +17,7 @@ class Router{
                     $action = ucfirst($route->action);
                     if(method_exists($path, $action)){
                         $controller = new $path;
-                        $controller->$action($params);
+                        return $controller->$action($params);
                     }
                     else{
                         echo 'метод не найден';
@@ -29,10 +29,9 @@ class Router{
                     echo $path;
                 }
             }
-            // else{
-            //     echo '404';
-            // }
+
         }
+        return '404';
     } 
 
     public function createPattern($path){
