@@ -8,7 +8,7 @@ class View{
         return $this->renderLayout($page, $this->renderView($page));
     }
 
-    public function renderLayout(Page $page){
+    public function renderLayout(Page $page, $content){
         $layoutPath = $_SERVER['DOCUMENT_ROOT'] . "/app/views/layouts/{$page->layout}.php";
 
         if(file_exists($layoutPath)){

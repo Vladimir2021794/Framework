@@ -10,6 +10,7 @@ class Page{
     public $data;
 
     public function __construct($title, $layout, $view, $data = []){
+
         $this->title = $title;
         $this->layout = $layout;
         $this->view = $view;

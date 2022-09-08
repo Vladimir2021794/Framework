@@ -2,18 +2,11 @@
 
 namespace Core;
 
-use Core\View;
-
-class Controller {
-
-    public $view;
-
-    public function __construct(){
-        $this->view = new View;
-    }
+abstract class Controller{
 
     protected function render($title, $layout, $view, $data = []){
-        return new Page($title, $layout, $view, $data);
+        $page = new Page($title, $layout, $view, $data);
+        return (new View)->render($page);
     }
 
 }
