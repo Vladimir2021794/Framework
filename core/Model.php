@@ -1,17 +1,16 @@
 <?php
+
 	namespace Core;
 	
+    use Core\DB;
+
 	class Model
 	{
-		private static $link;
+		public static $link;
 		
 		public function __construct()
 		{
-			if (!self::$link) {
-				$config = require "/config/db";
-				self::$link = mysqli_connect($config['host'], $config['login'], $config['password'], $config['dbname']);
-				mysqli_query(self::$link, "SET NAMES 'utf8'");
-			}
+			$this->link = DB::getConnect();
 		}
 		
 		protected function findOne($query)

@@ -2,34 +2,32 @@
 
 namespace Core;
 
-use PDO;
-
 class DB{
 
-    private static $object;
-    private static $con;
+    private static $connect;
 
     public function __construct(){
         $config =  require 'config/db.php';
-        self::$con =  new PDO('mysql:host='.$config['host'].';dbname='.$config['dbname'].'', $config['login'], $config['password']);
+        self::$connect =  mysqli_connect('mysql:host='.$config['host'].';dbname='.$config['dbname'].'', $config['login'], $config['password']);
     }
 
-    static public function connect(){
-        if(self::$object == null){
-            self::$object = new self;
+    static public function getConnect() {
+        if(is_null(self::$connect)){
+            self::$connect = new self();
         }
+        return self::$connect;
     }
 
-    static public function query($sql, $params = []){
-        self::connect();
-        $stmt = self::$con->prepare($sql);
-        if(!empty($params)){
-            foreach($params as $key => $val){
-                $stmt->bindValue(':'. $key, $val);
-            }
-        }
-        $stmt->execute();
-        return $stmt;
-    }
+    // static public function query($sql, $params = []){
+    //     self::$connect;
+    //     $stmt = self::$connect->prepare($sql);
+    //     if(!empty($params)){
+    //         foreach($params as $key => $val){
+    //             $stmt->bindValue(':'. $key, $val);
+    //         }
+    //     }
+    //     $stmt->execute();
+    //     return $stmt;
+    // }
 
 }

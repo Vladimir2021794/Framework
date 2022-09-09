@@ -20,13 +20,15 @@ class PostController extends Controller{
     public function showPost(){
         // $data = [];
         
-        $query = "SELECT * FROM posts";
-        $link = mysqli_connect('localhost', 'root', 'root', 'blog');
-        $result = mysqli_query($link, $query);
-        $posts = mysqli_fetch_all($result);
+        // $query = "SELECT * FROM posts";
+        // $link = mysqli_connect('localhost', 'root', 'root', 'blog');
+        // $result = mysqli_query($link, $query);
+        // $posts = mysqli_fetch_all($result);
+        $model = new Model;
         $data = [
-            'posts' => $posts
+            'posts' => $model
         ];
+        
         $this->render('newtitle', 'layout', 'index', $data);
     }
 }
