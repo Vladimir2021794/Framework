@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use Core\Controller;
 use Core\DB;
-use Core\Model;
+use App\Models\Post;
 
 class PostController extends Controller{
 
@@ -18,15 +18,11 @@ class PostController extends Controller{
     }
 
     public function showPost(){
-        // $data = [];
-        
-        $query = "SELECT * FROM posts";
-        $link = mysqli_connect('localhost', 'root', 'root', 'blog');
-        $result = mysqli_query($link, $query);
-        $posts = mysqli_fetch_all($result);
+        $static = Post::getAll('posts');
         $data = [
-            'posts' => $posts
+            'posts' => $static
         ];
+
         $this->render('newtitle', 'layout', 'index', $data);
     }
 }

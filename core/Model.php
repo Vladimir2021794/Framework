@@ -1,10 +1,11 @@
 <?php
 	namespace Core;
 	
-	class Model
+	 abstract class Model
 	{
-		private static $link;
-		
+		private $link;
+        protected $table;
+        
 		public function __construct()
 		{
 			if (!self::$link) {
@@ -27,4 +28,9 @@
 			
 			return $data;
 		}
+
+        static public function getAll($table){
+            $result =  DB::query('SELECT * FROM ' . $table);
+            return $result;
+        }
 	}

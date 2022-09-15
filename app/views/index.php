@@ -1,5 +1,10 @@
 <?php
 
-foreach($posts as $post){
-   echo $post[1];
+foreach($posts as $row){
+         
+    $userid = $row["id"];
+    $title = $row["title"];
+    $userage = $row["content"];
+    echo $title . '<br>';
 }
+
